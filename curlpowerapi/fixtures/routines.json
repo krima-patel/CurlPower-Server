@@ -1,0 +1,24 @@
+[
+  {
+    "model": "curlpowerapi.routine",
+    "pk": 1,
+    "fields": {
+        "title": "My Wash Day",
+        "description": "Hair care starts with a good wash day, which starts with finding a good shampoo...",
+        "hair_type": "3A",
+        "date": "2022-12-12",
+        "user": 1
+    }
+  },
+  {
+    "model": "curlpowerapi.routine",
+    "pk": 2,
+    "fields": {
+        "title": "Bouncy curls for days",
+        "description": "Nexxus hair mousse has been lifechanging",
+        "hair_type": "3A",
+        "date": "2022-12-13",
+        "user": 1
+    }
+  }
+]

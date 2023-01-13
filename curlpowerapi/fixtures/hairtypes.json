@@ -1,0 +1,9 @@
+[
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 1,
+    "fields": {
+      "hair_type": "3A"
+    }
+  }
+]
