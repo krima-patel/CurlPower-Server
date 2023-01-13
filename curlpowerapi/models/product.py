@@ -10,6 +10,6 @@ class Product(models.Model):
     product_type = models.CharField(max_length=50)
     purpose = models.TextField()
     price_range = models.CharField(max_length=50)
-    image_url = models.CharField(max_length=1000)
+    image_url = models.CharField(max_length=200)
     date = models.DateField()
     user = models.ForeignKey(User, on_delete = models.CASCADE)
