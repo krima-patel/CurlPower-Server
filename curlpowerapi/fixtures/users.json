@@ -1,0 +1,10 @@
+[
+  {
+    "model": "curlpowerapi.user",
+    "pk": 1,
+    "fields": {
+      "uid": "CyTfLdsFCVhJpuvZDdbN6o3oR1W2",
+      "name": "Krima Patel"
+    }
+  }
+]

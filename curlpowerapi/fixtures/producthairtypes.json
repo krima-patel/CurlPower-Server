@@ -1,0 +1,11 @@
+[
+  {
+    "model": "curlpowerapi.producthairtype",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "hair_type": 1,
+      "user": 1
+    }
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "model": "curlpowerapi.product",
+    "pk": 1,
+    "fields": {
+      "routine": 1,
+      "hair_type": "3A",
+      "name": "Paul Mitchell Clean Beauty Hydrating Shampoo",
+      "product_type": "Shampoo",
+      "purpose": "Bring moisture back into hair",
+      "price_range": "",
+      "image_url": "",
+      "date": "2022-12-12",
+      "user": 1
+    }
+  },
+  {
+    "model": "curlpowerapi.product",
+    "pk": 2,
+    "fields": {
+      "routine": 1,
+      "hair_type": "3A",
+      "name": "Nexxus Mousse",
+      "product_type": "Mousse",
+      "purpose": "Hold up curls, keep strands intact, prevents frizz",
+      "price_range": "",
+      "image_url": "",
+      "date": "2022-12-13",
+      "user": 1
+    }
+  }
+]
