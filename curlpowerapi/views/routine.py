@@ -3,7 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from curlpowerapi.models import Routine
+from curlpowerapi.models import Routine, User
 
 class RoutineView(ViewSet):
     """Curl Power Routine View"""
@@ -27,6 +27,24 @@ class RoutineView(ViewSet):
         """
         routines = Routine.objects.all()
         serializer = RoutineSerializer(routines, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        """Handle POST operations
+
+        Returns
+            Response -- JSON serialized game instance
+        """
+        user = User.objects.get(pk=request.data["user_id"])
+
+        routine = Routine.objects.create(
+            title=request.data["title"],
+            description=request.data["description"],
+            hair_type=request.data["hair_type"],
+            date=request.data["date"],
+            user=user
+        )
+        serializer = RoutineSerializer(routine)
         return Response(serializer.data)
 
 class RoutineSerializer(serializers.ModelSerializer):
