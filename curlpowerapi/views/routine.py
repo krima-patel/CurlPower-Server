@@ -47,6 +47,21 @@ class RoutineView(ViewSet):
         serializer = RoutineSerializer(routine)
         return Response(serializer.data)
 
+    def update(self, request, pk):
+        """Handle PUT requests for a routine
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        routine=Routine.objects.get(pk=pk)
+        routine.title=request.data["title"]
+        routine.description=request.data["description"]
+        routine.hair_type=request.data["hair_type"]
+        routine.date=request.data["date"]
+        routine.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 class RoutineSerializer(serializers.ModelSerializer):
     """JSON serializer for routines
     """
