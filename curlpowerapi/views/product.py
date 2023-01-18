@@ -51,6 +51,27 @@ class ProductView(ViewSet):
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
+    def update(self, request, pk):
+        """Handle PUT requests for a product
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        product = Product.objects.get(pk=pk)
+        product.hair_type=request.data["hair_type"]
+        product.name=request.data["name"]
+        product.product_type=request.data["product_type"]
+        product.purpose=request.data["purpose"]
+        product.price_range=request.data["price_range"]
+        product.image_url=request.data["image_url"]
+        product.date=request.data["date"]
+
+        routine = Routine.objects.get(pk=request.data["routine_id"])
+        product.routine = routine
+        product.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 class ProductSerializer(serializers.ModelSerializer):
     """JSON serializer for product
     """
