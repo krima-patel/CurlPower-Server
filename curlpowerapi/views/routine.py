@@ -62,6 +62,12 @@ class RoutineView(ViewSet):
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
+    def destroy(self, request, pk):
+        """Handle DELETE request for a routine"""
+        routine=Routine.objects.get(pk=pk)
+        routine.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 class RoutineSerializer(serializers.ModelSerializer):
     """JSON serializer for routines
     """
