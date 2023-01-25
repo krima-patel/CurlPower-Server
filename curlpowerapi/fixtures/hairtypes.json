@@ -3,7 +3,84 @@
     "model": "curlpowerapi.hairtype",
     "pk": 1,
     "fields": {
+      "hair_type": "1A"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 2,
+    "fields": {
+      "hair_type": "1B"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 3,
+    "fields": {
+      "hair_type": "1C"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 4,
+    "fields": {
+      "hair_type": "2A"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 5,
+    "fields": {
+      "hair_type": "2B"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 6,
+    "fields": {
+      "hair_type": "2C"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 7,
+    "fields": {
       "hair_type": "3A"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 8,
+    "fields": {
+      "hair_type": "3B"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 9,
+    "fields": {
+      "hair_type": "3C"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 10,
+    "fields": {
+      "hair_type": "4A"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 11,
+    "fields": {
+      "hair_type": "4B"
+    }
+  },
+  {
+    "model": "curlpowerapi.hairtype",
+    "pk": 12,
+    "fields": {
+      "hair_type": "4C"
     }
   }
 ]

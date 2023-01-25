@@ -20,5 +20,27 @@
         "date": "2022-12-13",
         "user": 1
     }
+  },
+  {
+    "model": "curlpowerapi.routine",
+    "pk": 3,
+    "fields": {
+        "title": "Scalp Cleasning",
+        "description": "Essential part of any curly hair care routine",
+        "hair_type": "3A",
+        "date": "2023-01-01",
+        "user": 2
+    }
+  },
+  {
+    "model": "curlpowerapi.routine",
+    "pk": 4,
+    "fields": {
+        "title": "Perfect Ringlets",
+        "description": "Creating ringlets is fun",
+        "hair_type": "3B",
+        "date": "2023-01-01",
+        "user": 2
+    }
   }
 ]
