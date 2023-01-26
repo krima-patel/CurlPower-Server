@@ -25,6 +25,7 @@ class RoutineView(ViewSet):
         Returns:
             Response -- JSON serialized list of routines
         """
+        
         routines = Routine.objects.all()
         serializer = RoutineSerializer(routines, many=True)
         return Response(serializer.data)
@@ -35,12 +36,12 @@ class RoutineView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
-        user = User.objects.get(pk=request.data["user_id"])
+        user = User.objects.get(pk=request.data["userId"])
 
         routine = Routine.objects.create(
             title=request.data["title"],
             description=request.data["description"],
-            hair_type=request.data["hair_type"],
+            hair_type=request.data["hairType"],
             date=request.data["date"],
             user=user
         )
@@ -56,7 +57,7 @@ class RoutineView(ViewSet):
         routine=Routine.objects.get(pk=pk)
         routine.title=request.data["title"]
         routine.description=request.data["description"]
-        routine.hair_type=request.data["hair_type"]
+        routine.hair_type=request.data["hairType"]
         routine.date=request.data["date"]
         routine.save()
 

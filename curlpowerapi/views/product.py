@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework import serializers, status
 from curlpowerapi.models import Product, Routine, User, ProductHairType, HairType
 from .product_hair_type import ProductHairTypeSerializer
-from rest_framework.decorators import action
-from rest_framework import generics
+# from rest_framework.decorators import action
+# from rest_framework import generics
 
 class ProductView(ViewSet):
     """Curl Power Product View"""
@@ -31,18 +31,31 @@ class ProductView(ViewSet):
         Returns:
             Response -- JSON serialized list of products
         """
-        routine = request.query_params.get('routine', None)
-        if routine is not None:
-            products=products.filter(routine_id=routine)
-        serializer = ProductSerializer(products, many=True)
+        # routine = request.query_params.get('routine', None)
+        # if routine is not None:
+        #     products=products.filter(routine_id=routine)
+        # serializer = ProductSerializer(products, many=True)
 
-        # products = Product.objects.all()
-        # for product in products:
-        #     types = ProductHairType.objects.filter(product=product.id)
-        #     types_serialized = ProductHairTypeSerializer(types, many=True)
-        #     product.types = types_serialized.data
-        #     serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
+        routine_id = request.GET.get("routine")
+
+        if routine_id:
+            products = Product.objects.filter(routine_id=routine_id)
+            for product in products:
+                types = ProductHairType.objects.filter(product=product.id)
+                types_serialized = ProductHairTypeSerializer(types, many=True)
+                product.types = types_serialized.data
+                serializer = ProductSerializer(products, many=True)
+            return Response(serializer.data)
+        else:
+            products = Product.objects.all()
+            for product in products:
+                types = ProductHairType.objects.filter(product=product.id)
+                types_serialized = ProductHairTypeSerializer(types, many=True)
+                product.types = types_serialized.data
+                serializer = ProductSerializer(products, many=True)
+            return Response(serializer.data)
+        
+        
 
     def create(self, request):
         """Handle POST operations
@@ -114,9 +127,8 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id', 'routine', 'name',
                   'product_type','purpose', 'price_range','image_url', 'date', 'user', 'types')
         depth = 1
-
-class RoutineProductView(generics.ListCreateAPIView):
-    serializer_class = ProductSerializer
-    def get_queryset(self):
-        routine_id = self.kwargs['routine_id']
-        return Product.objects.filter(routine__id=routine_id)
+# class RoutineProductView(generics.ListCreateAPIView):
+#     serializer_class = ProductSerializer
+#     def get_queryset(self):
+#         routine_id = self.kwargs['routine_id']
+#         return Product.objects.filter(routine__id=routine_id)
