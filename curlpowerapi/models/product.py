@@ -21,3 +21,11 @@ class Product(models.Model):
     @types.setter
     def types(self, value):
         self.__types = value
+
+    # @property
+    # def types(self):
+    #     """will be used to return hair types for a product"""
+    #     hair_types = []
+    #     for type in self.types.all():
+    #         hair_types.append(type)
+    #     return hair_types
