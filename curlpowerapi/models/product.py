@@ -1,11 +1,10 @@
 from django.db import models
-from .user import User
 from .routine import Routine
+from .user import User
 
 class Product(models.Model):
 
     routine = models.ForeignKey(Routine, on_delete = models.CASCADE)
-    hair_type = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     product_type = models.CharField(max_length=50)
     purpose = models.TextField()
@@ -13,3 +12,20 @@ class Product(models.Model):
     image_url = models.CharField(max_length=200)
     date = models.DateField()
     user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    @property
+    def types(self):
+        """Will be used to return hair types of products"""
+        return self.__types
+
+    @types.setter
+    def types(self, value):
+        self.__types = value
+
+    # @property
+    # def types(self):
+    #     """will be used to return hair types for a product"""
+    #     hair_types = []
+    #     for type in self.types.all():
+    #         hair_types.append(type)
+    #     return hair_types

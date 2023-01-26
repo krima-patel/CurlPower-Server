@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from rest_framework import routers
-from curlpowerapi.views import register_user, check_user, RoutineView, ProductView, ProductHairTypeView, HairTypeView
+from curlpowerapi.views import register_user, check_user, RoutineView, ProductView, ProductHairTypeView, HairTypeView, RoutineProductView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'routines', RoutineView, 'routine')
@@ -30,4 +30,5 @@ urlpatterns = [
     path('checkuser', check_user),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('routineproducts/<int:routine_id>/', RoutineProductView.as_view(), name='routineproducts')
 ]

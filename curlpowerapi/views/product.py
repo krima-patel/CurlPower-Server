@@ -3,7 +3,10 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from curlpowerapi.models import Product, User, Routine
+from curlpowerapi.models import Product, Routine, User, ProductHairType, HairType
+from .product_hair_type import ProductHairTypeSerializer
+from rest_framework.decorators import action
+from rest_framework import generics
 
 class ProductView(ViewSet):
     """Curl Power Product View"""
@@ -15,6 +18,9 @@ class ProductView(ViewSet):
             Response -- JSON serialized product
         """
         product = Product.objects.get(pk=pk)
+        types = ProductHairType.objects.filter(product=pk)
+        types_serialized = ProductHairTypeSerializer(types, many=True)
+        product.types = types_serialized.data
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
@@ -25,8 +31,17 @@ class ProductView(ViewSet):
         Returns:
             Response -- JSON serialized list of products
         """
-        products = Product.objects.all()
+        routine = request.query_params.get('routine', None)
+        if routine is not None:
+            products=products.filter(routine_id=routine)
         serializer = ProductSerializer(products, many=True)
+
+        # products = Product.objects.all()
+        # for product in products:
+        #     types = ProductHairType.objects.filter(product=product.id)
+        #     types_serialized = ProductHairTypeSerializer(types, many=True)
+        #     product.types = types_serialized.data
+        #     serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -35,11 +50,11 @@ class ProductView(ViewSet):
         Returns
             Response -- JSON serialized product instance
         """
+        hair_types=request.data["types"]
         user = User.objects.get(pk=request.data["user_id"])
 
         product = Product.objects.create(
             routine=Routine.objects.get(pk=request.data["routine_id"]),
-            hair_type=request.data["hair_type"],
             name=request.data["name"],
             product_type=request.data["product_type"],
             purpose=request.data["purpose"],
@@ -48,7 +63,10 @@ class ProductView(ViewSet):
             date=request.data["date"],
             user=user
           )
-        serializer = ProductSerializer(product)
+        for hair in hair_types:
+            print(hair)
+            ProductHairType.objects.create(product=product, hair_type=HairType.objects.get(pk=hair))
+            serializer = ProductSerializer(product)
         return Response(serializer.data)
 
     def update(self, request, pk):
@@ -58,7 +76,6 @@ class ProductView(ViewSet):
             Response -- Empty body with 204 status code
         """
         product = Product.objects.get(pk=pk)
-        product.hair_type=request.data["hair_type"]
         product.name=request.data["name"]
         product.product_type=request.data["product_type"]
         product.purpose=request.data["purpose"]
@@ -70,10 +87,21 @@ class ProductView(ViewSet):
         product.routine = routine
         product.save()
 
+        types = request.data["types"]
+        existing_types = ProductHairType.objects.filter(product=product)
+
+        if existing_types is not None:
+            for taco in existing_types:
+                taco.delete()
+
+        if types is not None:
+            for taco in types:
+                ProductHairType.objects.create(product=product, hair_type=HairType.objects.get(pk=taco))
+
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk):
-        """Handle DELETE request for a product"""
+        """Handle DELETE request for a productcap"""
         product=Product.objects.get(pk=pk)
         product.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
@@ -83,5 +111,12 @@ class ProductSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Product
-        fields = ('id', 'routine', 'hair_type', 'name',
-                  'product_type','purpose', 'price_range','image_url', 'date', 'user')
+        fields = ('id', 'routine', 'name',
+                  'product_type','purpose', 'price_range','image_url', 'date', 'user', 'types')
+        depth = 1
+
+class RoutineProductView(generics.ListCreateAPIView):
+    serializer_class = ProductSerializer
+    def get_queryset(self):
+        routine_id = self.kwargs['routine_id']
+        return Product.objects.filter(routine__id=routine_id)
